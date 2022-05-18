@@ -1,5 +1,5 @@
 service:
-  name: bbok-store
+  name: book-store
 
 plugins:
   - serverless-bundle
@@ -10,11 +10,31 @@ provider:
   runtime: nodejs12.x
   memorySize: 256
   stage: ${opt:stage, 'dev'}
+  region: eu-central-1
+  environment:
+    BOOKS_TABLE_NAME: ${self:custom.BooksTable.name}
+  iamRoleStatements: 
+    - ${file(iam/BooksTableIAM.yml):BooksTableIAM}
   
+
+resources:
+  Resources:
+    BooksTable: ${file(resources/BooksTable.yml):BooksTable}
+ 
+
 functions:
-  hello:
-    handler: src/handlers/hello.handler
+  createBook:
+    handler: lambdas/endpoints/createBook.handler
     events:
       - http:
-          method: GET
-          path: /hello
+          method: POST
+          cors: true
+          path: /book
+
+
+custom:
+  BooksTable:
+    name: !Ref BooksTable
+    arn: !GetAtt BooksTable.Arn
+  bundle:
+    linting: false

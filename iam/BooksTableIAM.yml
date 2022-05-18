@@ -1,0 +1,6 @@
+BooksTableIAM:
+  Effect: Allow
+  Action: 
+    - dynamodb:PutItem
+  Resource: 
+    - ${self:custom.BooksTable.arn}
