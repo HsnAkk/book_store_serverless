@@ -2,5 +2,7 @@ BooksTableIAM:
   Effect: Allow
   Action: 
     - dynamodb:PutItem
+    - dynamodb:Scan
+    - dynamodb:GetItem
   Resource: 
     - ${self:custom.BooksTable.arn}

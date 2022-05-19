@@ -30,6 +30,20 @@ functions:
           method: POST
           cors: true
           path: /book
+  getBooks:
+    handler: lambdas/endpoints/getBooks.handler
+    events:
+      - http:
+          method: GET
+          cors: true
+          path: /books
+  getBook:
+    handler: lambdas/endpoints/getBook.handler
+    events:
+      - http:
+          method: GET
+          cors: true
+          path: /book/{id}
 
 
 custom:
